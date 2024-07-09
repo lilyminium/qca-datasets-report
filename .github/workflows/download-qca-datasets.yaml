@@ -1,0 +1,39 @@
+name: Download QCA Datasets registry
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+jobs:
+  download-qca-datasets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install environment
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: devtools/conda-envs/qca-datasets.yaml
+          create-args: >-
+            python=3.11
+          cache-environment: true
+      
+      - name: Environment Information
+        run: |
+          conda info
+          conda list
+      
+      - name: Download QCA Datasets
+        run: |
+          python scripts/get-all-datasets.py --output-file registry.csv
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update QCA Datasets registry"
+          commit_user_name: "GitHub Actions"
+          branch: main

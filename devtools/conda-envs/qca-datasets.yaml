@@ -1,0 +1,18 @@
+name: qca-datasets
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python
+  - pip
+
+  # UI
+  - click
+  - tqdm
+
+  # QC
+  - qcelemental >=0.27.1
+  - qcportal >=0.54.1
+  - openff-qcsubmit >=0.51.0
+
