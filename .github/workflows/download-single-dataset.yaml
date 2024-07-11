@@ -1,0 +1,87 @@
+name: Download Single QCA Dataset
+
+on:
+  workflow_dispatch:
+
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+
+jobs:
+  setup-dataset-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      dataset-matrix: ${{ steps.set-up-matrix.outputs.dataset_matrix }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install environment
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: devtools/conda-envs/qca-datasets.yaml
+          create-args: >-
+            python=3.11
+          cache-environment: true
+
+      - name: Environment Information
+        run: |
+          conda info
+          conda list
+
+      - name: Set up matrix
+        id: set-up-matrix
+        run: |
+          dataset_matrix=$(python scripts/setup-download-dataset-matrix.py --input-file registry.csv --output-directory datasets)
+          echo $dataset_matrix
+
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "dataset_matrix<<$EOF" >> $GITHUB_OUTPUT
+          echo $dataset_matrix >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
+  
+  download-single-dataset:
+    runs-on: ubuntu-latest
+
+    needs: setup-dataset-matrix
+    strategy:
+      matrix:
+        include: ${{fromJSON(needs.setup-dataset-matrix.outputs.dataset-matrix)}}
+      max-parallel: 1
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install environment
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: devtools/conda-envs/qca-datasets.yaml
+          create-args: >-
+            python=3.11
+          cache-environment: true
+
+
+      - name: Download QCA Dataset
+        run: |
+          python scripts/download-single-dataset.py   \
+            --dataset '${{ matrix.dataset }}'         \
+            --spec    '${{ matrix.spec }}'              \
+            --type    ${{ matrix.type }}              \
+            --output-directory datasets
+
+      - name: Pull again
+        run: |
+          git pull --rebase
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update QCA Dataset ${{ matrix.dataset }}"
+          commit_user_name: "GitHub Actions"
+          branch: main
+          add_options: '--no-all'
+          # push_options: '--force'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

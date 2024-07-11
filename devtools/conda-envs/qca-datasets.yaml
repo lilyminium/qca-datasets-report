@@ -16,3 +16,6 @@ dependencies:
   - qcportal >=0.54.1
   - openff-qcsubmit >=0.51.0
 
+  # other
+  - pandas
+

@@ -1,0 +1,52 @@
+name: Search SMILES pattern
+
+on:
+  issue_comment:
+    types: [created]
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  search-smiles:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install environment
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: devtools/conda-envs/openff-env.yaml
+          create-args: >-
+            python=3.11
+
+      - name: Environment Information
+        run: |
+          conda info
+          conda list
+
+      - name: Search SMILES pattern
+        run: |
+          text='${{ github.event.comment.body }}'
+          replacement="python scripts/get-smiles-matches.py"
+          command=$(echo "${text/search/"$replacement"} --issue-number ${{ github.event.issue.number }} --output-directory artifact --workflow-run-id ${{ github.run_id }}")
+          echo $command
+
+          eval $command
+
+
+
+          # PATTERN=$(python scripts/parse-issue-smiles.py --text '${{ github.event.comment.body }}')
+          # echo "Pattern: $PATTERN"
+
+          # python scripts/get-smiles-matches.py --pattern $PATTERN --issue-number ${{ github.event.issue.number }} --output-directory artifact
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: artifact
+          retention-days: 12

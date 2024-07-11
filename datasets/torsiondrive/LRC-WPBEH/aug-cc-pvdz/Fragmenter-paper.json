@@ -1,0 +1,62 @@
+{
+  "entries": {
+    "https://api.qcarchive.molssi.org:443/": [
+      {
+        "type": "torsion",
+        "record_id": 19950644,
+        "cmiles": "[H:14][c:1]1[c:2]([c:4]([c:6]([c:5]([c:3]1[H:16])[C:7](=[O:11])[O:12][C:9]([H:20])([H:21])[C:8]([H:18])([H:19])[N+:10]([H:22])([H:23])[H:24])[Cl:13])[H:17])[H:15]",
+        "inchi_key": "ZXJZLOZFDAEBNF-MNVMIVAENA-O"
+      },
+      {
+        "type": "torsion",
+        "record_id": 19950637,
+        "cmiles": "[H:22][c:1]1[c:2]([c:10]([o:19][c:5]1[H:26])[C:12]([H:27])([H:28])[N:14]([H:31])[c:7]2[c:4]([c:9]([c:8]([c:3]([c:6]2[C:11](=[O:16])[O-:15])[H:24])[S:20](=[O:17])(=[O:18])[N:13]([H:29])[H:30])[Cl:21])[H:25])[H:23]",
+        "inchi_key": "ZZUFCTLCJUWOSV-MYSIBAAWNA-M"
+      },
+      {
+        "type": "torsion",
+        "record_id": 19950638,
+        "cmiles": "[H:22][c:1]1[c:2]([c:10]([o:19][c:5]1[H:26])[C:12]([H:27])([H:28])[N:14]([H:31])[c:7]2[c:4]([c:9]([c:8]([c:3]([c:6]2[C:11](=[O:16])[O-:15])[H:24])[S:20](=[O:17])(=[O:18])[N:13]([H:29])[H:30])[Cl:21])[H:25])[H:23]",
+        "inchi_key": "ZZUFCTLCJUWOSV-MYSIBAAWNA-M"
+      },
+      {
+        "type": "torsion",
+        "record_id": 19950629,
+        "cmiles": "[H:22][c:1]1[c:2]([c:4]([c:7]2[c:6]([c:3]1[H:24])[c:9]([c:5]([c:8]([c:10]2[O:19][P:21](=[O:17])([O-:14])[O-:15])[C:11]([H:27])([H:28])[H:29])[H:26])[O:18][P:20](=[O:16])([O-:12])[O-:13])[H:25])[H:23]",
+        "inchi_key": "JTNHOVZOOVVGHI-DYTKRZBZNA-J"
+      },
+      {
+        "type": "torsion",
+        "record_id": 19950634,
+        "cmiles": "[H:18][c:2]1[n:12][c:3]([c:4]([n:14]1[H:31])[C:8]([H:25])([H:26])[S:17][C:10]([H:29])([H:30])[C:9]([H:27])([H:28])[N:16]([H:33])/[C:5](=[N:13]\\[C:1]#[N:11])/[N:15]([H:32])[C:7]([H:22])([H:23])[H:24])[C:6]([H:19])([H:20])[H:21]",
+        "inchi_key": "AQIXAKUUQRKLND-CVKCBSPNNA-N"
+      },
+      {
+        "type": "torsion",
+        "record_id": 19950632,
+        "cmiles": "[H:9][C:1](=[N+:7]([H:18])[H:19])/[N+:8](=[C:2](\\[N:5]([H:15])[H:16])/[N:6]([H:17])[C:4]([H:13])([H:14])[C:3]([H:10])([H:11])[H:12])/[H:20]",
+        "inchi_key": "HCCAPQJMRJDSPC-LVJAIEANNA-P"
+      },
+      {
+        "type": "torsion",
+        "record_id": 19950643,
+        "cmiles": "[H:19][c:1]1[c:2]([c:5]([c:3]([c:6]([c:4]1[C:7](=[O:16])[O:17][C:13]([H:34])([H:35])[C:12]([H:32])([H:33])[N+:15]([H:38])([C:10]([H:28])([H:29])[C:8]([H:22])([H:23])[H:24])[C:11]([H:30])([H:31])[C:9]([H:25])([H:26])[H:27])[Cl:18])[H:21])[N:14]([H:36])[H:37])[H:20]",
+        "inchi_key": "VDANGULDQQJODZ-CMTOLTKANA-O"
+      },
+      {
+        "type": "torsion",
+        "record_id": 19950650,
+        "cmiles": "[H:19][c:1]1[c:2]([c:4]([c:8]([c:7]([c:3]1[H:21])[C:10](=[O:15])[N:14]([H:28])[c:9]2[n:13][c:5]([c:6]([s:18]2)[H:24])[H:23])[O:17][C:11](=[O:16])[C:12]([H:25])([H:26])[H:27])[H:22])[H:20]",
+        "inchi_key": "GXWWYCHNNUHFAL-YHMJCDSINA-N"
+      },
+      {
+        "type": "torsion",
+        "record_id": 19950649,
+        "cmiles": "[H:22][c:1]1[c:2]([c:4]([c:7]([c:6]([c:3]1[H:24])[C:10](=[O:17])[N:14]([H:30])[c:9]2[n:13][c:5]([c:8]([s:21]2)[N+:15](=[O:19])[O-:16])[H:26])[O:20][C:11](=[O:18])[C:12]([H:27])([H:28])[H:29])[H:25])[H:23]",
+        "inchi_key": "YQNQNVDNTFHQSW-YHMJCDSINA-N"
+      }
+    ]
+  },
+  "provenance": {},
+  "type": "TorsionDriveResultCollection"
+}

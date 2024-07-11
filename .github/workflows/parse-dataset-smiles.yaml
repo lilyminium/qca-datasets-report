@@ -1,0 +1,93 @@
+name: Parse dataset SMILES
+on:
+  workflow_dispatch:
+
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+
+jobs:
+  setup-parse-dataset-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      optimization-files: ${{ steps.set-up-optimization-matrix.outputs.opt_dataset_matrix }}
+      torsiondrive-files: ${{ steps.set-up-optimization-matrix.outputs.opt_dataset_matrix }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install environment
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: devtools/conda-envs/qca-datasets.yaml
+          create-args: >-
+            python=3.11
+
+      - name: Environment Information
+        run: |
+          conda info
+          conda list
+
+      - name: Set up optimization matrix
+        id: set-up-optimization-matrix
+        run: |
+          opt_dataset_matrix=$(python scripts/setup-parse-dataset-matrix.py --input-directory datasets/optimization --output-directory tables/optimization)
+
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+
+          echo $opt_dataset_matrix
+          echo "opt_dataset_matrix<<$EOF" >> $GITHUB_OUTPUT
+          echo $opt_dataset_matrix >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
+      
+      - name: Set up torsiondrive matrix
+        id: set-up-torsiondrive-matrix
+        run: |
+          td_dataset_matrix=$(python scripts/setup-parse-dataset-matrix.py --input-directory datasets/torsiondrive --output-directory tables/torsiondrive)
+
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "td_dataset_matrix<<$EOF" >> $GITHUB_OUTPUT
+          echo $td_dataset_matrix >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
+  
+  parse-opt-dataset:
+    runs-on: ubuntu-latest
+    needs: setup-parse-dataset-matrix
+    strategy:
+      matrix:
+        include: ${{fromJSON(needs.setup-parse-dataset-matrix.outputs.optimization-files)}}
+      max-parallel: 1
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install environment
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: devtools/conda-envs/openff-env.yaml
+          create-args: >-
+            python=3.11
+          cache-environment: true
+
+
+      - name: Parse opt dataset
+        run: |
+          python scripts/label-optimization-smiles.py   \
+            --input-file  '${{ matrix.file }}'          \
+            --output-directory tables/optimization
+
+      - name: Pull again
+        run: |
+          git pull --rebase
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update QCA Dataset ${{ matrix.dataset }}"
+          commit_user_name: "GitHub Actions"
+          branch: main
+          add_options: '--no-all'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

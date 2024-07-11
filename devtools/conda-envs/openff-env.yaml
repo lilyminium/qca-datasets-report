@@ -1,0 +1,28 @@
+name: openff-env
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python
+  - pip
+
+  # UI
+  - click
+  - tqdm
+
+  # QC
+  - openff-toolkit >=0.14.4
+  - rdkit
+
+  # other
+  - pandas
+  - pyarrow
+  - PyGithub
+
+  - pip:
+    - git+https://github.com/openforcefield/yammbs.git@main
+    # molecule visualization / format conversion
+    - cairosvg
+    - reportlab
+    - svglib

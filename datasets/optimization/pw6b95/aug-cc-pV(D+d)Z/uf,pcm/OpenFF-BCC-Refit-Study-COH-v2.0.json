@@ -1,0 +1,350 @@
+{
+  "entries": {
+    "https://api.qcarchive.molssi.org:443/": [
+      {
+        "type": "optimization",
+        "record_id": 48497991,
+        "cmiles": "[H:3][C:1]#[C:2][H:4]",
+        "inchi_key": "HSFWRNGVRCDJHI-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498059,
+        "cmiles": "[H:3][C:1](=[C:2]([H:5])[H:6])[H:4]",
+        "inchi_key": "VGGSQFUCUMXWEO-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498056,
+        "cmiles": "[H:4][C:1](=[C:2]([H:6])[C:3]([H:7])([H:8])[H:9])[H:5]",
+        "inchi_key": "QQONPFPTGQHPMA-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498052,
+        "cmiles": "[H:5][C:1](=[C:2]([H:7])[C:4]([H:11])([H:12])[C:3]([H:8])([H:9])[H:10])[H:6]",
+        "inchi_key": "VXNZUUAINFGPBY-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498053,
+        "cmiles": "[H:5][C:1](=[C:2]([H:7])[C:4]([H:11])([H:12])[C:3]([H:8])([H:9])[H:10])[H:6]",
+        "inchi_key": "VXNZUUAINFGPBY-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498054,
+        "cmiles": "[H:5][C:1](=[C:2]([H:7])[C:4]([H:11])([H:12])[C:3]([H:8])([H:9])[H:10])[H:6]",
+        "inchi_key": "VXNZUUAINFGPBY-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498055,
+        "cmiles": "[H:5][C:1](=[C:2]([H:7])[C:4]([H:11])([H:12])[C:3]([H:8])([H:9])[H:10])[H:6]",
+        "inchi_key": "VXNZUUAINFGPBY-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498178,
+        "cmiles": "[H:6][C:3]([H:7])([H:8])[C:1]#[C:2][C:5]([H:12])([H:13])[C:4]([H:9])([H:10])[H:11]",
+        "inchi_key": "NKTDTMONXHODTI-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498042,
+        "cmiles": "[H:6][C:1](=[C:2]([H:8])[C:5]([H:15])([C:3]([H:9])([H:10])[H:11])[C:4]([H:12])([H:13])[H:14])[H:7]",
+        "inchi_key": "YHQXBTXEYZIYOV-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498065,
+        "cmiles": "[H:7][C:2](=[C:1]=[O:6])[C:5]([H:14])([C:3]([H:8])([H:9])[H:10])[C:4]([H:11])([H:12])[H:13]",
+        "inchi_key": "OXCVCJVUOYADBS-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498066,
+        "cmiles": "[H:7][C:2](=[C:1]=[O:6])[C:5]([H:14])([C:3]([H:8])([H:9])[H:10])[C:4]([H:11])([H:12])[H:13]",
+        "inchi_key": "OXCVCJVUOYADBS-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498076,
+        "cmiles": "[H:6][C:1](=[O:5])[C:4]([H:13])([C:2]([H:7])([H:8])[H:9])[C:3]([H:10])([H:11])[H:12]",
+        "inchi_key": "AMIMRNSIRUDHCM-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498070,
+        "cmiles": "[H:6][C:2](=[C:1]=[O:5])[C:4]([H:10])([H:11])[C:3]([H:7])([H:8])[H:9]",
+        "inchi_key": "JSEMCPMTAXQTJN-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498077,
+        "cmiles": "[H:6][C:1](=[O:5])[C:4]([H:13])([C:2]([H:7])([H:8])[H:9])[C:3]([H:10])([H:11])[H:12]",
+        "inchi_key": "AMIMRNSIRUDHCM-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498072,
+        "cmiles": "[H:6][C:2](=[C:1]=[O:5])[C:4]([H:10])([H:11])[C:3]([H:7])([H:8])[H:9]",
+        "inchi_key": "JSEMCPMTAXQTJN-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498079,
+        "cmiles": "[H:6][C:1](=[O:5])[C:4]([H:13])([C:2]([H:7])([H:8])[H:9])[C:3]([H:10])([H:11])[H:12]",
+        "inchi_key": "AMIMRNSIRUDHCM-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498073,
+        "cmiles": "[H:6][C:2](=[C:1]=[O:5])[C:4]([H:10])([H:11])[C:3]([H:7])([H:8])[H:9]",
+        "inchi_key": "JSEMCPMTAXQTJN-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48497983,
+        "cmiles": "[H:6]/[C:1](=[C:2](\\[H:7])/[O:5][H:13])/[C:4]([H:11])([H:12])[C:3]([H:8])([H:9])[H:10]",
+        "inchi_key": "SIIVGPQREKVCOP-ARJAWSKDNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498082,
+        "cmiles": "[H:6][C:1](=[O:5])[C:4]([H:13])([C:2]([H:7])([H:8])[H:9])[C:3]([H:10])([H:11])[H:12]",
+        "inchi_key": "AMIMRNSIRUDHCM-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48497985,
+        "cmiles": "[H:6]/[C:1](=[C:2](\\[H:7])/[O:5][H:13])/[C:4]([H:11])([H:12])[C:3]([H:8])([H:9])[H:10]",
+        "inchi_key": "SIIVGPQREKVCOP-ARJAWSKDNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498224,
+        "cmiles": "[H:7][C:2]([H:8])([H:9])[C:1](=[O:6])[C:5]([H:16])([C:3]([H:10])([H:11])[H:12])[C:4]([H:13])([H:14])[H:15]",
+        "inchi_key": "SYBYTAAJFKOIEJ-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498219,
+        "cmiles": "[H:7][C:3]([H:8])([H:9])[C:2](=[C:1]=[O:6])[C:5]([H:13])([H:14])[C:4]([H:10])([H:11])[H:12]",
+        "inchi_key": "MCJYFCRORMMYBR-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498220,
+        "cmiles": "[H:7][C:3]([H:8])([H:9])[C:2](=[C:1]=[O:6])[C:5]([H:13])([H:14])[C:4]([H:10])([H:11])[H:12]",
+        "inchi_key": "MCJYFCRORMMYBR-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498074,
+        "cmiles": "[H:5][C:2](=[C:1]=[O:4])[C:3]([H:6])([H:7])[H:8]",
+        "inchi_key": "UYLUJGRCKKSWHS-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498086,
+        "cmiles": "[H:5][C:1](=[O:4])[C:3]([H:9])([H:10])[C:2]([H:6])([H:7])[H:8]",
+        "inchi_key": "NBBJYMSMWIIQGU-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498041,
+        "cmiles": "[H:5][C:1](=[C:2]([C:3]([H:7])([H:8])[H:9])[O:4][H:10])[H:6]",
+        "inchi_key": "NARVIWMVBMUEOG-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498089,
+        "cmiles": "[H:5][C:1](=[O:4])[C:3]([H:9])([H:10])[C:2]([H:6])([H:7])[H:8]",
+        "inchi_key": "NBBJYMSMWIIQGU-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498097,
+        "cmiles": "[H:7][C:1](=[O:5])[O:6][C:4]([H:14])([C:2]([H:8])([H:9])[H:10])[C:3]([H:11])([H:12])[H:13]",
+        "inchi_key": "RMOUBSOVHSONPZ-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498401,
+        "cmiles": "[H:6][C:2]([H:7])([H:8])[C:3]([H:9])([H:10])[C:1](=[O:4])[O:5][H:11]",
+        "inchi_key": "XBDQKXXYIPTUBI-JLSKMEETNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498404,
+        "cmiles": "[H:6][C:2]([H:7])([H:8])[C:3]([H:9])([H:10])[C:1](=[O:4])[O:5][H:11]",
+        "inchi_key": "XBDQKXXYIPTUBI-JLSKMEETNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498405,
+        "cmiles": "[H:6][C:2]([H:7])([H:8])[C:3]([H:9])([H:10])[C:1](=[O:4])[O:5][H:11]",
+        "inchi_key": "XBDQKXXYIPTUBI-JLSKMEETNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498391,
+        "cmiles": "[H:7][C:2]([H:8])([H:9])[C:4]([H:13])([H:14])[C:1](=[O:5])[O:6][C:3]([H:10])([H:11])[H:12]",
+        "inchi_key": "RJUFJBKOKNCXHH-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498396,
+        "cmiles": "[H:7][C:2]([H:8])([H:9])[C:4]([H:13])([H:14])[C:1](=[O:5])[O:6][C:3]([H:10])([H:11])[H:12]",
+        "inchi_key": "RJUFJBKOKNCXHH-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498096,
+        "cmiles": "[H:4][C:1](=[O:3])[C:2]([H:5])([H:6])[H:7]",
+        "inchi_key": "IKHGUXGNUITLKF-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498449,
+        "cmiles": "[H:4][C:1]([H:5])([H:6])[C:2]([H:7])([H:8])[O:3][H:9]",
+        "inchi_key": "LFQSCWFLJHTTHZ-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498058,
+        "cmiles": "[H:4][C:1](=[C:2]([H:6])[O:3][H:7])[H:5]",
+        "inchi_key": "IMROMDMJAWUWLK-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498450,
+        "cmiles": "[H:4][C:1]([H:5])([H:6])[C:2]([H:7])([H:8])[O:3][H:9]",
+        "inchi_key": "LFQSCWFLJHTTHZ-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498448,
+        "cmiles": "[H:5][C:1]([H:6])([H:7])[C:3]([H:11])([H:12])[O:4][C:2]([H:8])([H:9])[H:10]",
+        "inchi_key": "XOBKSJJDNFUZPF-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498441,
+        "cmiles": "[H:6][C:1]([H:7])([H:8])[C:3]([H:12])([H:13])[O:5][C:4]([H:14])([H:15])[C:2]([H:9])([H:10])[H:11]",
+        "inchi_key": "RTZKZFJDLAIYFH-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498442,
+        "cmiles": "[H:6][C:1]([H:7])([H:8])[C:3]([H:12])([H:13])[O:5][C:4]([H:14])([H:15])[C:2]([H:9])([H:10])[H:11]",
+        "inchi_key": "RTZKZFJDLAIYFH-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498445,
+        "cmiles": "[H:6][C:1]([H:7])([H:8])[C:3]([H:12])([H:13])[O:5][C:4]([H:14])([H:15])[C:2]([H:9])([H:10])[H:11]",
+        "inchi_key": "RTZKZFJDLAIYFH-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498107,
+        "cmiles": "[H:6][C:1](=[O:4])[O:5][C:3]([H:10])([H:11])[C:2]([H:7])([H:8])[H:9]",
+        "inchi_key": "WBJINCZRORDGAQ-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498110,
+        "cmiles": "[H:6][C:1](=[O:4])[O:5][C:3]([H:10])([H:11])[C:2]([H:7])([H:8])[H:9]",
+        "inchi_key": "WBJINCZRORDGAQ-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498111,
+        "cmiles": "[H:6][C:1](=[O:4])[O:5][C:3]([H:10])([H:11])[C:2]([H:7])([H:8])[H:9]",
+        "inchi_key": "WBJINCZRORDGAQ-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498114,
+        "cmiles": "[H:6][C:1](=[O:4])[O:5][C:3]([H:10])([H:11])[C:2]([H:7])([H:8])[H:9]",
+        "inchi_key": "WBJINCZRORDGAQ-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498421,
+        "cmiles": "[H:7][C:2]([H:8])([H:9])[C:3]([H:10])([H:11])[O:6][C:1](=[O:4])[O:5][H:12]",
+        "inchi_key": "CQDGTJPVBWZJAZ-JLSKMEETNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498424,
+        "cmiles": "[H:7][C:2]([H:8])([H:9])[C:3]([H:10])([H:11])[O:6][C:1](=[O:4])[O:5][H:12]",
+        "inchi_key": "CQDGTJPVBWZJAZ-JLSKMEETNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498426,
+        "cmiles": "[H:7][C:2]([H:8])([H:9])[C:3]([H:10])([H:11])[O:6][C:1](=[O:4])[O:5][H:12]",
+        "inchi_key": "CQDGTJPVBWZJAZ-JLSKMEETNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498430,
+        "cmiles": "[H:7][C:2]([H:8])([H:9])[C:3]([H:10])([H:11])[O:6][C:1](=[O:4])[O:5][H:12]",
+        "inchi_key": "CQDGTJPVBWZJAZ-JLSKMEETNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498264,
+        "cmiles": "[H:5][C:2]([H:6])([H:7])[C:1](=[O:3])[O:4][H:8]",
+        "inchi_key": "QTBSBXVTEAMEQO-TULZNQERNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498265,
+        "cmiles": "[H:5][C:2]([H:6])([H:7])[C:1](=[O:3])[O:4][H:8]",
+        "inchi_key": "QTBSBXVTEAMEQO-TULZNQERNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498120,
+        "cmiles": "[H:3][C:1](=[O:2])[H:4]",
+        "inchi_key": "WSFSSNUMVMOOMR-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498455,
+        "cmiles": "[H:3][C:1]([H:4])([H:5])[O:2][H:6]",
+        "inchi_key": "OKKJLVBELUTLKV-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498117,
+        "cmiles": "[H:5][C:1](=[O:3])[O:4][C:2]([H:6])([H:7])[H:8]",
+        "inchi_key": "TZIHFWKZFHZASV-UHFFFAOYNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498452,
+        "cmiles": "[H:6][C:2]([H:7])([H:8])[O:5][C:1](=[O:3])[O:4][H:9]",
+        "inchi_key": "CXHHBNMLPJOKQD-TULZNQERNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498118,
+        "cmiles": "[H:4][C:1](=[O:2])[O:3][H:5]",
+        "inchi_key": "BDAGIHXWWSANSR-QEZKKOIZNA-N"
+      },
+      {
+        "type": "optimization",
+        "record_id": 48498119,
+        "cmiles": "[H:4][C:1](=[O:2])[O:3][H:5]",
+        "inchi_key": "BDAGIHXWWSANSR-QEZKKOIZNA-N"
+      }
+    ]
+  },
+  "provenance": {},
+  "type": "OptimizationResultCollection"
+}

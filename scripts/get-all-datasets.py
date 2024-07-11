@@ -17,7 +17,8 @@ def main(
     datasets = client.list_datasets()
     # get specifications
     for entry in tqdm.tqdm(datasets):
-        specifications = client.get_dataset(entry["dataset_type"], entry["dataset_name"])
+        dataset = client.get_dataset(entry["dataset_type"], entry["dataset_name"])
+        specifications = dataset.specifications
         entry["specifications"] = sorted(specifications)
 
     df = pd.DataFrame(datasets)
