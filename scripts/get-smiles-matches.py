@@ -301,12 +301,12 @@ def main(
             for file in embedded_files:
                 molecule_file_texts.append(f"![{file}](../blob/assets/{file}?raw=true)")
                 # molecule_file_texts.append(f"![{file}](../blob/{commit_sha}/{file}?raw=true)")
-            comment += "<details>\n\n<summary>Click to expand for molecules</summary>\n\n## Molecules\n\n"
+            comment += "\n\n## Molecules\n\n<details>\n\n<summary>Click to expand for molecules</summary>\n\n"
             comment += "\n\n".join(molecule_file_texts)
             comment += "\n\n</details>"
 
         artifact_link = f"https://github.com/{REPO_NAME}/actions/runs/{workflow_run_id}"
-        comment += "\n## Artifacts\n\n"
+        comment += "\n\n## Artifacts\n\n"
         comment += f"See the artifacts at the [GitHub Actions run]({artifact_link})."
         
 

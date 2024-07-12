@@ -28,20 +28,14 @@ jobs:
           conda list
 
       - name: Search SMILES pattern
+        if: contains(github.event.comment.body, 'botsearch')
         run: |
-          text='${{ github.event.comment.body }}'
-          replacement="python scripts/get-smiles-matches.py"
-          command=$(echo "${text/search/"$replacement"} --issue-number ${{ github.event.issue.number }} --output-directory artifact --workflow-run-id ${{ github.run_id }}")
-          echo $command
+          BASE_COMMAND=$(python scripts/parse-comment-for-search.py --text '${{ github.event.comment.body }}')
+          COMMAND=$(echo $BASE_COMMAND --issue-number ${{ github.event.issue.number }} --output-directory artifact --workflow-run-id ${{ github.run_id }})
 
-          eval $command
+          echo $COMMAND
+          eval $COMMAND
 
-
-
-          # PATTERN=$(python scripts/parse-issue-smiles.py --text '${{ github.event.comment.body }}')
-          # echo "Pattern: $PATTERN"
-
-          # python scripts/get-smiles-matches.py --pattern $PATTERN --issue-number ${{ github.event.issue.number }} --output-directory artifact
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
