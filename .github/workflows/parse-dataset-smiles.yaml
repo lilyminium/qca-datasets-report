@@ -59,6 +59,7 @@ jobs:
       matrix:
         include: ${{fromJSON(needs.setup-parse-dataset-matrix.outputs.optimization-files)}}
       max-parallel: 1
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
@@ -99,6 +100,7 @@ jobs:
       matrix:
         include: ${{fromJSON(needs.setup-parse-dataset-matrix.outputs.torsiondrive-files)}}
       max-parallel: 1
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
@@ -131,4 +133,3 @@ jobs:
           add_options: '--no-all'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
