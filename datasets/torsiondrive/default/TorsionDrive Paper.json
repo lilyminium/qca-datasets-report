@@ -1,0 +1,26 @@
+{
+  "entries": {
+    "https://api.qcarchive.molssi.org:443/": [
+      {
+        "type": "torsion",
+        "record_id": 9159275,
+        "cmiles": "[H:5][C:1]([H:6])([C:2]([H:7])([H:8])[O:4][H:10])[O:3][H:9]",
+        "inchi_key": "LYCAIKOWRPUZTN-UHFFFAOYNA-N"
+      },
+      {
+        "type": "torsion",
+        "record_id": 9159276,
+        "cmiles": "[H:5][C:1]([H:6])([C:2]([H:7])([H:8])[O:4][H:10])[O:3][H:9]",
+        "inchi_key": "LYCAIKOWRPUZTN-UHFFFAOYNA-N"
+      },
+      {
+        "type": "torsion",
+        "record_id": 9159274,
+        "cmiles": "[H:5][C:1]([H:6])([C:2]([H:7])([H:8])[O:4][H:10])[O:3][H:9]",
+        "inchi_key": "LYCAIKOWRPUZTN-UHFFFAOYNA-N"
+      }
+    ]
+  },
+  "provenance": {},
+  "type": "TorsionDriveResultCollection"
+}
