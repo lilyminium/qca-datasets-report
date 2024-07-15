@@ -10,6 +10,8 @@ defaults:
 
 jobs:
   search-smiles:
+    # only run if body contains 'botsearch' and not 'norun'
+    if: ${{ contains(github.event.comment.body, 'botsearch') && !contains(github.event.comment.body, 'norun') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -28,7 +30,6 @@ jobs:
           conda list
 
       - name: Search SMILES pattern
-        if: contains(github.event.comment.body, 'botsearch')
         run: |
           BASE_COMMAND=$(python scripts/parse-comment-for-search.py --text '${{ github.event.comment.body }}')
           COMMAND=$(echo $BASE_COMMAND --issue-number ${{ github.event.issue.number }} --output-directory artifact --workflow-run-id ${{ github.run_id }})

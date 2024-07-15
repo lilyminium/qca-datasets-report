@@ -39,8 +39,8 @@ def main(
             if output_file.exists():
                 continue
 
-            # temporarily only keep optimization/default
-            if not row["dataset_type"] == "optimization" or not spec == "default":
+            # temporarily only keep default spec
+            if not spec == "default":
                 continue
 
             entry = {
