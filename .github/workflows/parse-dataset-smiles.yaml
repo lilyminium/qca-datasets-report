@@ -48,6 +48,8 @@ jobs:
           td_dataset_matrix=$(python scripts/setup-parse-dataset-matrix.py --input-directory datasets/torsiondrive --output-directory tables/torsiondrive)
 
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+
+          echo $td_dataset_matrix
           echo "td_dataset_matrix<<$EOF" >> $GITHUB_OUTPUT
           echo $td_dataset_matrix >> $GITHUB_OUTPUT
           echo "$EOF" >> $GITHUB_OUTPUT

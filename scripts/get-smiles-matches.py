@@ -359,10 +359,8 @@ def main(
 
             <summary>Click to expand for counts</summary>
 
-            {counts.to_markdown()}
-
             """
-        )
+        ) + counts.to_markdown(index=False) + "\n\n</details>"
 
         if commit_sha:
             molecule_file_texts = []
