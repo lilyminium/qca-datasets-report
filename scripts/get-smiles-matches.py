@@ -252,6 +252,10 @@ def main(
         for type_name in types:
             cmd += f" --type '{type_name}'"
 
+    if combinations:
+        for combination in combinations:
+            cmd += f" --combination '{combination}'"
+
 
     commit_sha = ""
     embedded_files = []
