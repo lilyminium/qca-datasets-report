@@ -50,6 +50,7 @@ jobs:
       matrix:
         include: ${{fromJSON(needs.setup-dataset-matrix.outputs.dataset-matrix)}}
       max-parallel: 1
+      fail-fast: false
     
     steps:
       - uses: actions/checkout@v4
