@@ -240,7 +240,7 @@ def main(
         if mol.chemical_environment_matches(pattern):
             matching_smiles.append(smiles)
 
-    cmd = f"search --pattern '{pattern}'"
+    cmd = f"botsearch --pattern '{pattern}'"
     if specs:
         for spec in specs:
             cmd += f" --spec '{spec}'"

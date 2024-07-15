@@ -5,7 +5,7 @@ SMILES_PATTERN = re.compile("-pattern\s+[\'\"]*([0-9a-zA-Z,+()$:-=#~\[\]]+)[\'\"
 DATASET_PATTERN = re.compile("-dataset\s+[\'\"]*([\w-]+)[\'\"]*")
 SPEC_PATTERN = re.compile("-spec\s+[\'\"]*([\w-]+)[\'\"]*")
 TYPE_PATTERN = re.compile("-type\s+[\'\"]*([\w]+)[\'\"]*")
-COMBINATION_PATTERN = re.compile("-combination\s+[\'\"]*([\w]+)[\'\"]*")
+COMBINATION_PATTERN = re.compile("-combination\s+[\'\"]*([0-9\w-\.]+)[\'\"]*")
 
 @click.command()
 @click.option(
