@@ -153,6 +153,26 @@ def draw_grid_df(
     default=[],
 )
 @click.option(
+    "--type",
+    "types",
+    required=False,
+    type=str,
+    multiple=True,
+    default=[],
+)
+@click.option(
+    "--combination",
+    "combinations",
+    required=False,
+    type=str,
+    multiple=True,
+    default=[],
+)
+@click.option(
+    "--combinations-directory",
+    type=click.Path(exists=True, dir_okay=True, file_okay=False)
+)
+@click.option(
     "--workflow-run-id",
     type=str,
 )
@@ -163,12 +183,33 @@ def main(
     workflow_run_id: str,
     specs: list[str] = None,
     datasets: list[str] = None,
+    types: list[str] = None,
+    combinations: list[str] = None,
+    combinations_directory: str = "combinations"
 ):
     g = Github(os.environ['GITHUB_TOKEN'])
     repo = g.get_repo(REPO_NAME)
 
     dataset = ds.dataset("tables")
     print(f"Loaded {dataset.count_rows()} molecules")
+
+    if combinations:
+        combination_dfs = []
+        for combination in combinations:
+            df_file = pathlib.Path(combinations_directory) / f"{combination}.csv"
+            combination_df = pd.read_csv(df_file)
+            combination_dfs.append(combination_df)
+        combination_df = pd.concat(combination_dfs)
+        optimizations = combination_df[combination_df["type"] == "optimization"].id.values
+        torsiondrives = combination_df[combination_df["type"] == "torsiondrive"].id.values
+
+        expression = (
+            pc.field("qcarchive_id").isin(optimizations)
+            | pc.field("qcarchive_id").isin(torsiondrives)
+        )
+        dataset = dataset.filter(expression)
+        print(f"Filtered for combinations to {dataset.count_rows()} molecules")
+
 
     if specs:
         expression = pc.field("specification").isin(specs)
@@ -179,6 +220,11 @@ def main(
         expression = pc.field("dataset").isin(datasets)
         dataset = dataset.filter(expression)
         print(f"Filtered for datasets to {dataset.count_rows()} molecules")
+
+    if types:
+        expression = pc.field("type").isin(types)
+        dataset = dataset.filter(expression)
+        print(f"Filtered for types to {dataset.count_rows()} molecules")
 
     all_smiles = dataset.to_table(
         columns=["smiles"]
@@ -201,6 +247,11 @@ def main(
     if datasets:
         for dataset_name in datasets:
             cmd += f" --dataset '{dataset_name}'"
+
+    if types:
+        for type_name in types:
+            cmd += f" --type '{type_name}'"
+
 
     commit_sha = ""
     embedded_files = []
@@ -287,12 +338,25 @@ def main(
         else:
             print("Too many molecules to draw")
 
+        counts = df.groupby(by=["type", "dataset", "specification"]).count().reset_index()
+        counts = counts[["type", "dataset", "specification", "smiles"]]
+        counts = counts.rename(columns={"smiles": "# conformers"})
+        counts = counts.sort_values(by=["type", "dataset", "specification"])
 
         comment += textwrap.dedent(
             f"""
             Unique matches: {len(matching_smiles)}
             Matching conformers: {len(df)}
-            From datasets: {", ".join(df["dataset"].unique())}
+            Number of datasets: {len(df.dataset.unique())}
+
+            ## Counts
+
+            <details>
+
+            <summary>Click to expand for counts</summary>
+
+            {counts.to_markdown()}
+
             """
         )
 
@@ -307,7 +371,7 @@ def main(
 
         artifact_link = f"https://github.com/{REPO_NAME}/actions/runs/{workflow_run_id}"
         comment += "\n\n## Artifacts\n\n"
-        comment += f"See the artifacts at the [GitHub Actions run]({artifact_link})."
+        comment += f"See the artifacts at the [GitHub Actions run]({artifact_link}). They will expire in 7 days."
         
 
     pr = repo.get_issue(issue_number)

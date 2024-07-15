@@ -32,7 +32,7 @@ jobs:
       - name: Search SMILES pattern
         run: |
           BASE_COMMAND=$(python scripts/parse-comment-for-search.py --text '${{ github.event.comment.body }}')
-          COMMAND=$(echo $BASE_COMMAND --issue-number ${{ github.event.issue.number }} --output-directory artifact --workflow-run-id ${{ github.run_id }})
+          COMMAND=$(echo $BASE_COMMAND --issue-number ${{ github.event.issue.number }} --output-directory artifact --workflow-run-id ${{ github.run_id }} --combinations-directory combinations)
 
           echo $COMMAND
           eval $COMMAND
@@ -44,4 +44,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: artifact
-          retention-days: 12
+          retention-days: 7
