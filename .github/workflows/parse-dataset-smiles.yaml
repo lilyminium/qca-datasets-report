@@ -91,3 +91,44 @@ jobs:
           add_options: '--no-all'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+  parse-td-dataset:
+    runs-on: ubuntu-latest
+    needs: setup-parse-dataset-matrix
+    strategy:
+      matrix:
+        include: ${{fromJSON(needs.setup-parse-dataset-matrix.outputs.torsiondrive-files)}}
+      max-parallel: 1
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install environment
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-file: devtools/conda-envs/openff-env.yaml
+          create-args: >-
+            python=3.11
+          cache-environment: true
+
+
+      - name: Parse opt dataset
+        run: |
+          python scripts/label-torsiondrive-smiles.py   \
+            --input-file  '${{ matrix.file }}'          \
+            --output-directory tables/torsiondrive
+
+      - name: Pull again
+        run: |
+          git pull --rebase
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update QCA Dataset ${{ matrix.dataset }}"
+          commit_user_name: "GitHub Actions"
+          branch: main
+          add_options: '--no-all'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

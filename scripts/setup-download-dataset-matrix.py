@@ -40,7 +40,7 @@ def main(
                 continue
 
             # temporarily only keep optimization/default
-            if not row["dataset_type"] == "optimization" or not spec == "default":
+            if not row["dataset_type"] == "torsiondrive" or not spec == "default":
                 continue
 
             entry = {

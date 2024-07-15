@@ -56,7 +56,7 @@ def download(
             datasets=[dataset],
             spec_name=spec_name,
         )
-        stem = dataset.replace(" ", "-") + ".json"
+        stem = dataset + ".json"
         output = output_directory / dataset_type / spec_name / stem
         output.parent.mkdir(exist_ok=True, parents=True)
         with output.open("w") as f:
