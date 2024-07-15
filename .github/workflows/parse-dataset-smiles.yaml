@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       optimization-files: ${{ steps.set-up-optimization-matrix.outputs.opt_dataset_matrix }}
-      torsiondrive-files: ${{ steps.set-up-optimization-matrix.outputs.opt_dataset_matrix }}
+      torsiondrive-files: ${{ steps.set-up-optimization-matrix.outputs.td_dataset_matrix }}
 
     steps:
       - uses: actions/checkout@v4
