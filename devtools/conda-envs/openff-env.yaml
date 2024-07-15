@@ -13,6 +13,7 @@ dependencies:
 
   # QC
   - openff-toolkit >=0.14.4
+  - openff-qcsubmit
   - rdkit
 
   # other
@@ -26,3 +27,6 @@ dependencies:
     - cairosvg
     - reportlab
     - svglib
+
+    # markdown tables
+    - tabulate
