@@ -240,7 +240,7 @@ def post_discussion_comment(
 )
 @click.option(
     "--discussion-id",
-    type=int,
+    type=str,
 )
 @click.option(
     "--spec",
