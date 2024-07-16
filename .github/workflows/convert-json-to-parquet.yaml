@@ -63,6 +63,9 @@ jobs:
       max-parallel: 1
       fail-fast: false
 
+    env:
+      OE_LICENSE: ${{ github.workspace }}/oe_license.txt
+
     steps:
       - uses: actions/checkout@v4
 
@@ -73,6 +76,12 @@ jobs:
           create-args: >-
             python=3.11
           cache-environment: true
+
+      - name: Make oe_license.txt file from GH org secret "OE_LICENSE"
+        env:
+          OE_LICENSE_TEXT: ${{ secrets.OE_LICENSE }}
+        run: |
+          echo "${OE_LICENSE_TEXT}" > ${OE_LICENSE}
 
 
       - name: Parse opt dataset
