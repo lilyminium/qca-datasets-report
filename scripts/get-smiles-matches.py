@@ -150,7 +150,7 @@ def get_dataset_and_command_suffix(
 
         expression = (
             pc.field("qcarchive_id").isin(optimizations)
-            | pc.field("qcarchive_id").isin(torsiondrives)
+            | pc.field("torsiondrive_id").isin(torsiondrives)
         )
         dataset = dataset.filter(expression)
         print(f"Filtered for combinations to {dataset.count_rows()} molecules")
