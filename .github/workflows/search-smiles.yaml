@@ -19,13 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check object
-        run: |
-          cat << OBJECT
-          ${{ toJson(github) }}
-          OBJECT
-
-
       - name: Install environment
         uses: mamba-org/setup-micromamba@v1
         with:
@@ -40,7 +33,7 @@ jobs:
 
       - name: Search SMILES pattern
         run: |
-          COMMENT_TEXT="${${{ github.event.comment.body }}:-${{ github.event.discussion.body }}}"
+          COMMENT_TEXT="${{ github.event.comment.body }}${{ github.event.discussion.body }}"
           echo "COMMENT_TEXT=$COMMENT_TEXT" >> $GITHUB_ENV
 
           echo $COMMENT_TEXT
