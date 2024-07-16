@@ -89,6 +89,8 @@ jobs:
           python scripts/label-optimization-smiles.py   \
             --input-file  '${{ matrix.file }}'          \
             --output-directory tables/optimization
+          
+          rm ${OE_LICENSE}
 
       - name: Pull again
         run: |
