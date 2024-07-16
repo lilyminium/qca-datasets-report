@@ -1,7 +1,7 @@
 import click
 import re
 
-SMILES_PATTERN = re.compile("-pattern\s+[\'\"]*([0-9a-zA-Z\,\+\(\)\$\:\-\=\#\~\[\]]+)[\'\"]*", re.IGNORECASE)
+SMILES_PATTERN = re.compile("-pattern\s+[\'\"]*([0-9a-zA-Z\,\+\(\)\$\:\!\&\-\=\#\~\[\]]+)[\'\"]*", re.IGNORECASE)
 DATASET_PATTERN = re.compile("-dataset\s+[\'\"]*([\w\-]+)[\'\"]*")
 SPEC_PATTERN = re.compile("-spec\s+[\'\"]*([\w\-]+)[\'\"]*")
 TYPE_PATTERN = re.compile("-type\s+[\'\"]*([\w]+)[\'\"]*")
