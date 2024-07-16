@@ -44,7 +44,7 @@ jobs:
           echo ${{ github.event.comment.body }}
 
           BASE_COMMAND=$(python scripts/parse-comment-for-search.py --text '${{ github.event.comment.body }}')
-          COMMAND=$(echo $BASE_COMMAND --issue-number ${{ github.event.issue.number }} --output-directory artifact --workflow-run-id ${{ github.run_id }} --combinations-directory combinations)
+          COMMAND=$(echo $BASE_COMMAND --issue-number ${{ github.event.discussion.number }} --output-directory artifact --workflow-run-id ${{ github.run_id }} --combinations-directory combinations)
 
           echo $COMMAND
           eval $COMMAND
