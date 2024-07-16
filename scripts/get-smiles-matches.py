@@ -188,7 +188,6 @@ def get_dataset_and_command_suffix(
 
 
 def post_discussion_comment(
-    repo,
     discussion_id: str,
     comment: str,
 ):
@@ -219,14 +218,6 @@ def post_discussion_comment(
     response.raise_for_status()
     print(response.text)
 
-
-    # repo._requester.requestJsonAndCheck(
-    #     "POST",
-    #     f"{repo.url}/discussions/{discussion_number}/comments",
-    #     input={
-    #         "body": comment,
-    #     }
-    # )
 
 
 @click.command()
@@ -352,7 +343,7 @@ def main(
         print(f"Saved {len(df)} matching molecules to {csv}")
 
         # draw as PNGs
-        if len(df.smiles.unique()) < 100:
+        if len(df.smiles.unique()) < 200:
             molecule_directory = output_directory / "molecules"
             molecule_directory.mkdir(exist_ok=True, parents=True)
             filenames = draw_grid_df(df, output_file=molecule_directory / "molecules.png")
@@ -441,7 +432,7 @@ def main(
         comment += "\n\n## Artifacts\n\n"
         comment += f"See the artifacts at the [GitHub Actions run]({artifact_link}). They will expire in 7 days."
     
-    post_discussion_comment(repo, discussion_id=discussion_id, comment=comment)
+    post_discussion_comment(discussion_id=discussion_id, comment=comment)
 
 
 if __name__ == "__main__":
