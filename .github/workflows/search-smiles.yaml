@@ -34,12 +34,19 @@ jobs:
       - name: Get text from discussion
         if: github.event.comment.body == null
         run: |
-          echo "BASE_TEXT=${{ github.event.discussion.body }}" >> $GITHUB_ENV
+          # account for multiline comment
+
+          echo "BASE_TEXT<<EOF" >> $GITHUB_ENV
+          echo "${{ github.event.discussion.body }}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       
       - name: Get text from comment
         if: github.event.comment.body != null
         run: |
-          echo "BASE_TEXT=${{ github.event.comment.body }}" >> $GITHUB_ENV
+          # account for multiline comment
+          echo "BASE_TEXT<<EOF" >> $GITHUB_ENV
+          echo "${{ github.event.comment.body }}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Search SMILES pattern
         run: |

@@ -2,11 +2,15 @@ import click
 import re
 
 SMILES_PATTERN = re.compile("-pattern\s+[\'\"]*([0-9a-zA-Z\,\+\(\)\$\:\!\&\-\=\#\~\[\]]+)[\'\"]*", re.IGNORECASE)
-DATASET_PATTERN = re.compile("-dataset\s+[\'\"]*([\w\-]+)[\'\"]*")
-SPEC_PATTERN = re.compile("-spec\s+[\'\"]*([\w\-]+)[\'\"]*")
-TYPE_PATTERN = re.compile("-type\s+[\'\"]*([\w]+)[\'\"]*")
-COMBINATION_PATTERN = re.compile("-combination\s+[\'\"]*([\w\-\.]+)[\'\"]*")
 MAX_MOLS_PATTERN = re.compile("-max-mols\s+([0-9]+)", re.IGNORECASE)
+
+
+REGEXES = {
+    "dataset": re.compile("-dataset\s+[\'\"]*([\w\-]+)[\'\"]*"),
+    "spec": re.compile("-spec\s+[\'\"]*([\w\-]+)[\'\"]*"),
+    "type": re.compile("-type\s+[\'\"]*([\w]+)[\'\"]*"),
+    "combination": re.compile("-combination\s+[\'\"]*([\w\-\.]+)[\'\"]*"),
+}
 
 @click.command()
 @click.option(
@@ -30,23 +34,15 @@ def main(
         f"--pattern '{smiles}'"
     )
 
-    dataset_matches = DATASET_PATTERN.findall(text)
-    for match in dataset_matches:
-        command += f" --dataset '{match}'"
-    
-    spec_matches = SPEC_PATTERN.findall(text)
-    for match in spec_matches:
-        command += f" --spec '{match}'"
-    
-    type_matches = TYPE_PATTERN.findall(text)
-    for match in type_matches:
-        command += f" --type '{match}'"
-    
-    combination_matches = COMBINATION_PATTERN.findall(text)
-    for match in combination_matches:
-        command += f" --combination '{match}'"
+    for key, pattern in REGEXES.items():
+        matches = pattern.findall(text)
+        for match in matches:
+            command += f" --{key} '{match}'"
 
     max_mols_matches = MAX_MOLS_PATTERN.findall(text)
+    if len(max_mols_matches) > 1:
+        raise ValueError(f"Pattern {text} contains multiple max-mols.")
+    
     for match in max_mols_matches:
         command += f" --max-mols {match}"
 
