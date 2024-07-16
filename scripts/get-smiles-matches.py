@@ -334,7 +334,9 @@ def main(
         )
     else:
         expression = pc.field("smiles").isin(matching_smiles)
-        df = dataset.filter(expression).to_table().to_pandas()
+        df = dataset.filter(expression).to_table(
+            columns=["type", "dataset", "specification", "smiles", "qcarchive_id", "torsiondrive_id"]
+        ).to_pandas()
         
         output_directory = pathlib.Path(output_directory)
         output_directory.mkdir(exist_ok=True, parents=True)

@@ -54,7 +54,7 @@ def main(
     df["dataset"] = dataset
     df["specification"] = spec
     df["torsiondrive_id"] = -1
-    df["dihedral_indices"] = [[-1, -1, -1, -1] for _ in range(len(df))]
+    df["dihedral_indices"] = [[[-1, -1, -1, -1]] for _ in range(len(df))]
     df["grid_ids"] = [[-1] for _ in range(len(df))]
     table = pa.Table.from_pandas(df)
     
