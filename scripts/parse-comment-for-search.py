@@ -6,6 +6,7 @@ DATASET_PATTERN = re.compile("-dataset\s+[\'\"]*([\w\-]+)[\'\"]*")
 SPEC_PATTERN = re.compile("-spec\s+[\'\"]*([\w\-]+)[\'\"]*")
 TYPE_PATTERN = re.compile("-type\s+[\'\"]*([\w]+)[\'\"]*")
 COMBINATION_PATTERN = re.compile("-combination\s+[\'\"]*([\w\-\.]+)[\'\"]*")
+MAX_MOLS_PATTERN = re.compile("-max-mols\s+([0-9]+)", re.IGNORECASE)
 
 @click.command()
 @click.option(
@@ -44,6 +45,10 @@ def main(
     combination_matches = COMBINATION_PATTERN.findall(text)
     for match in combination_matches:
         command += f" --combination '{match}'"
+
+    max_mols_matches = MAX_MOLS_PATTERN.findall(text)
+    for match in max_mols_matches:
+        command += f" --max-mols {match}"
 
     print(command)
 

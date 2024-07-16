@@ -28,6 +28,7 @@ def draw_grid_df(
     n_col: int = 4,
     n_page: int = 24,
     subImgSize=(300, 300),
+    max_mols: int = 200,
 ):
     """
     Draw molecules
@@ -63,7 +64,7 @@ def draw_grid_df(
     legends = []
     n_confs = []
     unique_smiles = df["smiles"].unique()
-    for smiles in unique_smiles:
+    for smiles in unique_smiles[:max_mols]:
         mol = Molecule.from_smiles(smiles, allow_undefined_stereo=True)
         rdmol = mol.to_rdkit()
         rdmols.append(rdmol)
@@ -187,6 +188,69 @@ def get_dataset_and_command_suffix(
 
 
 
+def draw_molecules(
+    df,
+    repo,
+    output_directory: pathlib.Path,
+    workflow_run_id: str,
+    max_mols: int = 200,
+):
+    embedded_files = []
+
+    molecule_directory = output_directory / "molecules"
+    molecule_directory.mkdir(exist_ok=True, parents=True)
+    filenames = draw_grid_df(
+        df,
+        output_file=molecule_directory / "molecules.png",
+        max_mols=max_mols,
+    )
+
+    # use pygithub to push molecules to images directory of assets branch
+    remote_directory = f"{workflow_run_id}/molecules"
+    element_list = []
+    old_to_new = {}
+    for filename in filenames:
+        with open(filename, "rb") as image_file:
+            image_content = base64.b64encode(image_file.read()).decode("utf-8")
+        blob = repo.create_git_blob(image_content, "utf-8")
+        name = pathlib.Path(filename).name
+        new_filename = f"{remote_directory}/{name}"
+        old_to_new[filename] = new_filename
+        element = InputGitTreeElement(new_filename, "100644", "blob", blob.sha)
+        element_list.append(element)
+        embedded_files.append(new_filename)
+    
+    # create a new commit
+    ref = repo.get_git_ref("heads/assets")
+    latest_commit = repo.get_git_commit(ref.object.sha)
+    base_tree = repo.get_git_tree(latest_commit.tree.sha)
+    tree = repo.create_git_tree(element_list, base_tree)
+
+    commit = repo.create_git_commit(
+        f"Add matching molecules {workflow_run_id}",
+        tree,
+        [latest_commit],
+    )
+    ref.edit(commit.sha)
+    commit_sha = commit.sha
+
+    # edit contents after the fact
+    for old, new in old_to_new.items():
+        with open(old, "rb") as f:
+            image_content = f.read()
+        repo_file = repo.get_contents(new, ref="assets")
+        commit = repo.update_file(
+            new,
+            f"Add matching molecule {workflow_run_id}",
+            image_content,
+            repo_file.sha,
+            branch="assets",
+        )
+
+    return commit_sha, embedded_files
+
+
+
 def post_discussion_comment(
     discussion_id: str,
     comment: str,
@@ -273,6 +337,11 @@ def post_discussion_comment(
     "--workflow-run-id",
     type=str,
 )
+@click.option(
+    "--max-mols",
+    type=int,
+    default=200,
+)
 def main(
     pattern: str,
     output_directory: str,
@@ -282,7 +351,8 @@ def main(
     datasets: list[str] = None,
     types: list[str] = None,
     combinations: list[str] = None,
-    combinations_directory: str = "combinations"
+    combinations_directory: str = "combinations",
+    max_mols: int = 200,
 ):
     g = Github(os.environ['GITHUB_TOKEN'])
     repo = g.get_repo(REPO_NAME)
@@ -313,10 +383,6 @@ def main(
     cmd = f"botsearch --pattern '{pattern}'" + command_suffix
 
 
-
-    commit_sha = ""
-    embedded_files = []
-
     comment = textwrap.dedent(
         f"""
         # SMILES matches
@@ -345,61 +411,13 @@ def main(
         print(f"Saved {len(df)} matching molecules to {csv}")
 
         # draw as PNGs
-        if len(df.smiles.unique()) < 200:
-            molecule_directory = output_directory / "molecules"
-            molecule_directory.mkdir(exist_ok=True, parents=True)
-            filenames = draw_grid_df(df, output_file=molecule_directory / "molecules.png")
-
-            # use pygithub to push molecules to images directory of assets branch
-            remote_directory = f"{workflow_run_id}/molecules"
-            element_list = []
-            old_to_new = {}
-            for filename in filenames:
-                with open(filename, "rb") as image_file:
-                    image_content = base64.b64encode(image_file.read()).decode("utf-8")
-                blob = repo.create_git_blob(image_content, "utf-8")
-                name = pathlib.Path(filename).name
-                new_filename = f"{remote_directory}/{name}"
-                old_to_new[filename] = new_filename
-                element = InputGitTreeElement(
-                    new_filename,
-                    "100644",
-                    "blob",
-                    # image_content,
-                    blob.sha,
-                )
-                element_list.append(element)
-                embedded_files.append(new_filename)
-            
-            ref = repo.get_git_ref("heads/assets")
-            latest_commit = repo.get_git_commit(ref.object.sha)
-            base_tree = repo.get_git_tree(latest_commit.tree.sha)
-            tree = repo.create_git_tree(element_list, base_tree)
-
-            commit = repo.create_git_commit(
-                f"Add matching molecules {workflow_run_id}",
-                tree,
-                [latest_commit],
-            )
-            ref.edit(commit.sha)
-            commit_sha = commit.sha
-
-            # edit contents after the fact
-            for old, new in old_to_new.items():
-                with open(old, "rb") as f:
-                    image_content = f.read()
-                repo_file = repo.get_contents(new, ref="assets")
-                commit = repo.update_file(
-                    new,
-                    f"Add matching molecule {workflow_run_id}",
-                    image_content,
-                    repo_file.sha,
-                    branch="assets",
-                )
-
-
-        else:
-            print("Too many molecules to draw")
+        commit_sha, embedded_files = draw_molecules(
+            df,
+            repo,
+            output_directory,
+            workflow_run_id,
+            max_mols=max_mols,
+        )
 
         counts = df.groupby(by=["type", "dataset", "specification"]).count().reset_index()
         counts = counts[["type", "dataset", "specification", "smiles"]]
@@ -421,18 +439,17 @@ def main(
             """
         ) + counts.to_markdown(index=False) + "\n\n</details>"
 
-        if commit_sha:
-            molecule_file_texts = []
-            for file in embedded_files:
-                molecule_file_texts.append(f"![{file}](../blob/assets/{file}?raw=true)")
-                # molecule_file_texts.append(f"![{file}](../blob/{commit_sha}/{file}?raw=true)")
-            comment += "\n\n## Molecules\n\n<details>\n\n<summary>Click to expand for molecules</summary>\n\n"
-            comment += "\n\n".join(molecule_file_texts)
-            comment += "\n\n</details>"
 
-        else:
-            comment += "\n\n## Molecules\n\n"
-            comment += "Too many molecules to draw"
+        molecule_file_texts = []
+        for file in embedded_files:
+            molecule_file_texts.append(f"![{file}](../blob/assets/{file}?raw=true)")
+            # molecule_file_texts.append(f"![{file}](../blob/{commit_sha}/{file}?raw=true)")
+        comment += "\n\n## Molecules\n\n<details>\n\n<summary>Click to expand for molecules</summary>\n\n"
+        if len(df.smiles.unique()) > max_mols:
+            comment += f"Too many molecules to display. Drawing a random {max_mols} molecules.\n\n"
+        comment += "\n\n".join(molecule_file_texts)
+        comment += "\n\n</details>"
+
 
         artifact_link = f"https://github.com/{REPO_NAME}/actions/runs/{workflow_run_id}"
         comment += "\n\n## Artifacts\n\n"
