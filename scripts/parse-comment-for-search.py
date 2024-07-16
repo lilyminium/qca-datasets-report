@@ -6,7 +6,7 @@ MAX_MOLS_PATTERN = re.compile("-max-mols\s+([0-9]+)", re.IGNORECASE)
 
 
 REGEXES = {
-    "dataset": re.compile("-dataset\s+[\'\"]*([\w\-]+)[\'\"]*"),
+    "dataset": re.compile("-dataset\s+[\'\"]*([\w\-\s]+)[\'\"]*"),
     "spec": re.compile("-spec\s+[\'\"]*([\w\-]+)[\'\"]*"),
     "type": re.compile("-type\s+[\'\"]*([\w]+)[\'\"]*"),
     "combination": re.compile("-combination\s+[\'\"]*([\w\-\.]+)[\'\"]*"),
