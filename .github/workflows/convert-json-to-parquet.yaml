@@ -1,4 +1,4 @@
-name: Parse dataset SMILES
+name: Convert JSON to Parquet
 on:
   workflow_dispatch:
 
