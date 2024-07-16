@@ -40,11 +40,22 @@ jobs:
 
       - name: Search SMILES pattern
         run: |
-          echo ${{ github.event }}
-          echo ${{ github.event.comment.body }}
+          COMMENT_TEXT="${${{ github.event.comment.body }}:-${{ github.event.discussion.body }}}"
+          echo "COMMENT_TEXT=$COMMENT_TEXT" >> $GITHUB_ENV
 
-          BASE_COMMAND=$(python scripts/parse-comment-for-search.py --text '${{ github.event.comment.body }}')
-          COMMAND=$(echo $BASE_COMMAND --issue-number ${{ github.event.discussion.number }} --output-directory artifact --workflow-run-id ${{ github.run_id }} --combinations-directory combinations)
+          echo $COMMENT_TEXT
+
+          BASE_COMMAND=$(                                 \
+            python scripts/parse-comment-for-search.py    \
+            --text '${{ env.COMMENT_TEXT }}'     \
+          )
+          COMMAND=$(              \
+            echo $BASE_COMMAND    \
+              --discussion-number ${{ github.event.discussion.number }} \
+              --output-directory artifact             \
+              --workflow-run-id ${{ github.run_id }}  \
+              --combinations-directory combinations   \
+            )
 
           echo $COMMAND
           eval $COMMAND

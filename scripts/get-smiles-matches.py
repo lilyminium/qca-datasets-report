@@ -123,6 +123,83 @@ def draw_grid_df(
     # return images
 
 
+
+def get_dataset_and_command_suffix(
+    specs: list[str] = None,
+    datasets: list[str] = None,
+    types: list[str] = None,
+    combinations: list[str] = None,
+    dataset_directory: str = "tables",
+    combinations_directory: str = "combinations"
+) -> tuple[ds.FileSystemDataset, str]:
+    dataset = ds.dataset(dataset_directory)
+    print(f"Loaded {dataset.count_rows()} molecules")
+
+    command_suffix = ""
+
+    if combinations:
+        combination_dfs = []
+        for combination in combinations:
+            df_file = pathlib.Path(combinations_directory) / f"{combination}.csv"
+            combination_df = pd.read_csv(df_file)
+            combination_dfs.append(combination_df)
+        combination_df = pd.concat(combination_dfs)
+        optimizations = combination_df[combination_df["type"] == "optimization"].id.values
+        torsiondrives = combination_df[combination_df["type"] == "torsiondrive"].id.values
+
+        expression = (
+            pc.field("qcarchive_id").isin(optimizations)
+            | pc.field("qcarchive_id").isin(torsiondrives)
+        )
+        dataset = dataset.filter(expression)
+        print(f"Filtered for combinations to {dataset.count_rows()} molecules")
+
+        for combination in combinations:
+            command_suffix += f" --combination '{combination}'"
+
+
+    if specs:
+        expression = pc.field("specification").isin(specs)
+        dataset = dataset.filter(expression)
+        print(f"Filtered for specifications to {dataset.count_rows()} molecules")
+
+        for spec in specs:
+            command_suffix += f" --spec '{spec}'"
+
+    if datasets:
+        expression = pc.field("dataset").isin(datasets)
+        dataset = dataset.filter(expression)
+        print(f"Filtered for datasets to {dataset.count_rows()} molecules")
+
+        for dataset_name in datasets:
+            command_suffix += f" --dataset '{dataset_name}'"
+
+    if types:
+        expression = pc.field("type").isin(types)
+        dataset = dataset.filter(expression)
+        print(f"Filtered for types to {dataset.count_rows()} molecules")
+
+        for type_name in types:
+            command_suffix += f" --type '{type_name}'"
+    
+    return dataset, command_suffix
+
+
+
+def post_discussion_comment(
+    repo,
+    discussion_number: str,
+    comment: str,
+):
+    repo._requester.requestJsonAndCheck(
+        "POST",
+        f"{repo.url}/discussions/{discussion_number}/comments",
+        input={
+            "body": comment,
+        }
+    )
+
+
 @click.command()
 @click.option(
     "--pattern",
@@ -133,7 +210,7 @@ def draw_grid_df(
     type=click.Path(exists=False, dir_okay=True, file_okay=False)
 )
 @click.option(
-    "--issue-number",
+    "--discussion-number",
     type=int,
 )
 @click.option(
@@ -179,7 +256,7 @@ def draw_grid_df(
 def main(
     pattern: str,
     output_directory: str,
-    issue_number: int,
+    discussion_number: int,
     workflow_run_id: str,
     specs: list[str] = None,
     datasets: list[str] = None,
@@ -189,42 +266,15 @@ def main(
 ):
     g = Github(os.environ['GITHUB_TOKEN'])
     repo = g.get_repo(REPO_NAME)
-
-    dataset = ds.dataset("tables")
-    print(f"Loaded {dataset.count_rows()} molecules")
-
-    if combinations:
-        combination_dfs = []
-        for combination in combinations:
-            df_file = pathlib.Path(combinations_directory) / f"{combination}.csv"
-            combination_df = pd.read_csv(df_file)
-            combination_dfs.append(combination_df)
-        combination_df = pd.concat(combination_dfs)
-        optimizations = combination_df[combination_df["type"] == "optimization"].id.values
-        torsiondrives = combination_df[combination_df["type"] == "torsiondrive"].id.values
-
-        expression = (
-            pc.field("qcarchive_id").isin(optimizations)
-            | pc.field("qcarchive_id").isin(torsiondrives)
-        )
-        dataset = dataset.filter(expression)
-        print(f"Filtered for combinations to {dataset.count_rows()} molecules")
-
-
-    if specs:
-        expression = pc.field("specification").isin(specs)
-        dataset = dataset.filter(expression)
-        print(f"Filtered for specifications to {dataset.count_rows()} molecules")
-
-    if datasets:
-        expression = pc.field("dataset").isin(datasets)
-        dataset = dataset.filter(expression)
-        print(f"Filtered for datasets to {dataset.count_rows()} molecules")
-
-    if types:
-        expression = pc.field("type").isin(types)
-        dataset = dataset.filter(expression)
-        print(f"Filtered for types to {dataset.count_rows()} molecules")
+    
+    dataset, command_suffix = get_dataset_and_command_suffix(
+        specs=specs,
+        datasets=datasets,
+        types=types,
+        combinations=combinations,
+        combinations_directory=combinations_directory
+    )
+    
 
     all_smiles = dataset.to_table(
         columns=["smiles"]
@@ -240,21 +290,8 @@ def main(
         if mol.chemical_environment_matches(pattern):
             matching_smiles.append(smiles)
 
-    cmd = f"botsearch --pattern '{pattern}'"
-    if specs:
-        for spec in specs:
-            cmd += f" --spec '{spec}'"
-    if datasets:
-        for dataset_name in datasets:
-            cmd += f" --dataset '{dataset_name}'"
+    cmd = f"botsearch --pattern '{pattern}'" + command_suffix
 
-    if types:
-        for type_name in types:
-            cmd += f" --type '{type_name}'"
-
-    if combinations:
-        for combination in combinations:
-            cmd += f" --combination '{combination}'"
 
 
     commit_sha = ""
@@ -374,10 +411,8 @@ def main(
         artifact_link = f"https://github.com/{REPO_NAME}/actions/runs/{workflow_run_id}"
         comment += "\n\n## Artifacts\n\n"
         comment += f"See the artifacts at the [GitHub Actions run]({artifact_link}). They will expire in 7 days."
-        
-
-    pr = repo.get_issue(issue_number)
-    pr.create_comment(comment)
+    
+    post_discussion_comment(repo, discussion_number=discussion_number, comment=comment)
 
 
 if __name__ == "__main__":
