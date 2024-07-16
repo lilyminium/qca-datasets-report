@@ -45,3 +45,5 @@ botsearch --pattern '[#15:1]-[#16:2]' --combination 'sage-2.2.0'
 
 A GitHub Action will get started searching for the molecule.
 The record IDs will get saved as an artifact.
+If under a certain number of molecules are matched (up to 300), the molecules
+will get rendered as images and returned.
