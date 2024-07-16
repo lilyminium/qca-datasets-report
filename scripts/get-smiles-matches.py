@@ -2,6 +2,7 @@ import base64
 import os
 import pathlib
 import requests
+import textwrap
 
 import click
 import tqdm
