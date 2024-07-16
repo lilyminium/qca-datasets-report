@@ -39,7 +39,7 @@ jobs:
           )
           COMMAND=$(              \
             echo $BASE_COMMAND    \
-              --discussion-number ${{ github.event.discussion.number }} \
+              --discussion-id ${{ github.event.discussion.id }} \
               --output-directory artifact             \
               --workflow-run-id ${{ github.run_id }}  \
               --combinations-directory combinations   \

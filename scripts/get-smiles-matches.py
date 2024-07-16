@@ -1,7 +1,7 @@
 import base64
 import os
 import pathlib
-import textwrap
+import requests
 
 import click
 import tqdm
@@ -188,16 +188,43 @@ def get_dataset_and_command_suffix(
 
 def post_discussion_comment(
     repo,
-    discussion_number: str,
+    discussion_id: str,
     comment: str,
 ):
-    repo._requester.requestJsonAndCheck(
-        "POST",
-        f"{repo.url}/discussions/{discussion_number}/comments",
-        input={
-            "body": comment,
-        }
+    # REST API not yet supported
+    # must use graphql to add discussion comment
+
+    query = f"""
+    mutation {{
+        addDiscussionComment(input: {{
+            discussionId: "{discussion_id}",
+            body: "{comment}"
+        }}) {{
+            comment {{
+                id
+            }}
+        }}
+    }}
+    """
+    token = os.environ['GITHUB_TOKEN']
+    headers = {
+        "Authorization": "token " + token,
+    }
+    response = requests.post(
+        "https://api.github.com/graphql",
+        headers=headers,
+        json={"query": query},
     )
+    response.raise_for_status()
+
+
+    # repo._requester.requestJsonAndCheck(
+    #     "POST",
+    #     f"{repo.url}/discussions/{discussion_number}/comments",
+    #     input={
+    #         "body": comment,
+    #     }
+    # )
 
 
 @click.command()
@@ -210,7 +237,7 @@ def post_discussion_comment(
     type=click.Path(exists=False, dir_okay=True, file_okay=False)
 )
 @click.option(
-    "--discussion-number",
+    "--discussion-id",
     type=int,
 )
 @click.option(
@@ -256,7 +283,7 @@ def post_discussion_comment(
 def main(
     pattern: str,
     output_directory: str,
-    discussion_number: int,
+    discussion_id: int,
     workflow_run_id: str,
     specs: list[str] = None,
     datasets: list[str] = None,
@@ -412,7 +439,7 @@ def main(
         comment += "\n\n## Artifacts\n\n"
         comment += f"See the artifacts at the [GitHub Actions run]({artifact_link}). They will expire in 7 days."
     
-    post_discussion_comment(repo, discussion_number=discussion_number, comment=comment)
+    post_discussion_comment(repo, discussion_id=discussion_id, comment=comment)
 
 
 if __name__ == "__main__":
