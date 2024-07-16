@@ -65,7 +65,7 @@ def main(
                 "specification": spec,
                 "torsiondrive_id": record.id,
                 "dihedral_indices": dihedrals,
-                "grid_id": list(grid_id),
+                "grid_ids": list(grid_id),
             }
             all_entries.append(entry)
 
