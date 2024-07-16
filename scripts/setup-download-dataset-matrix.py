@@ -34,7 +34,7 @@ def main(
         for spec in specifications:
             # check if file exists
             output_directory = pathlib.Path(output_directory)
-            stem = row["dataset_name"].replace(" ", "-") + ".json"
+            stem = row["dataset_name"] + ".json"
             output_file = output_directory / row["dataset_type"] / spec / stem
             if output_file.exists():
                 continue
