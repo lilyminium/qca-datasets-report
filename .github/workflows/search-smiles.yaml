@@ -31,11 +31,23 @@ jobs:
           conda info
           conda list
 
+      - name: Get text
+        if: github.event.discussion.body != null
+        id: get-text
+        run: |
+          echo "BASE_TEXT=${{ github.event.discussion.body }}" >> $GITHUB_ENV
+      
+      - name: Get comment
+        if: github.event.comment.body == null
+        id: get-text
+        run: |
+          echo "BASE_TEXT=${{ github.event.comment.body }}" >> $GITHUB_ENV
+
       - name: Search SMILES pattern
         run: |
           BASE_COMMAND=$(                                 \
             python scripts/parse-comment-for-search.py    \
-            --text '${{ github.event.comment.body }}${{ github.event.discussion.body }}'     \
+            --text '${{ env.BASE_TEXT }}'     \
           )
           COMMAND=$(              \
             echo $BASE_COMMAND    \
