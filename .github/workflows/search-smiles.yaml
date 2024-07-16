@@ -1,7 +1,9 @@
 name: Search SMILES pattern
 
 on:
-  issue_comment:
+  discussion:
+    types: [labeled]
+  discussion_comment:
     types: [created]
 
 defaults:
@@ -11,7 +13,7 @@ defaults:
 jobs:
   search-smiles:
     # only run if body contains 'botsearch' and not 'norun'
-    if: ${{ contains(github.event.comment.body, 'botsearch') && !contains(github.event.comment.body, 'norun') }}
+    # if: ${{ contains(github.event.comment.body, 'botsearch') && !contains(github.event.comment.body, 'norun') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +33,9 @@ jobs:
 
       - name: Search SMILES pattern
         run: |
+          echo ${{ github.event }}
+          echo ${{ github.event.comment.body }}
+
           BASE_COMMAND=$(python scripts/parse-comment-for-search.py --text '${{ github.event.comment.body }}')
           COMMAND=$(echo $BASE_COMMAND --issue-number ${{ github.event.issue.number }} --output-directory artifact --workflow-run-id ${{ github.run_id }} --combinations-directory combinations)
 
