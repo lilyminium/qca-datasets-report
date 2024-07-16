@@ -31,15 +31,13 @@ jobs:
           conda info
           conda list
 
-      - name: Get text
+      - name: Get text from discussion
         if: github.event.discussion.body != null
-        id: get-text
         run: |
           echo "BASE_TEXT=${{ github.event.discussion.body }}" >> $GITHUB_ENV
       
-      - name: Get comment
+      - name: Get text from comment
         if: github.event.comment.body == null
-        id: get-text
         run: |
           echo "BASE_TEXT=${{ github.event.comment.body }}" >> $GITHUB_ENV
 
