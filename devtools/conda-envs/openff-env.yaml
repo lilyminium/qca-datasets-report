@@ -2,6 +2,7 @@ name: openff-env
 
 channels:
   - conda-forge
+  - openeye
 
 dependencies:
   - python
@@ -13,6 +14,7 @@ dependencies:
 
   # QC
   - openff-toolkit >=0.14.4
+  - openeye-toolkits
   - openff-qcsubmit
   - rdkit
 
