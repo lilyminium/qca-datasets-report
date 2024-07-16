@@ -430,6 +430,10 @@ def main(
             comment += "\n\n".join(molecule_file_texts)
             comment += "\n\n</details>"
 
+        else:
+            comment += "\n\n## Molecules\n\n"
+            comment += "Too many molecules to draw"
+
         artifact_link = f"https://github.com/{REPO_NAME}/actions/runs/{workflow_run_id}"
         comment += "\n\n## Artifacts\n\n"
         comment += f"See the artifacts at the [GitHub Actions run]({artifact_link}). They will expire in 7 days."
