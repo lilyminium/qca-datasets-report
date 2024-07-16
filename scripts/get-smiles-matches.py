@@ -196,14 +196,12 @@ def post_discussion_comment(
     # must use graphql to add discussion comment
 
     query = f"""
-    mutation {{
-        addDiscussionComment(input: {{
-            discussionId: "{discussion_id}",
-            body: "{comment}"
-        }}) {{
-            comment {{
-                id
-            }}
+    addDiscussionComment(input: {{
+        discussionId: "{discussion_id}",
+        body: "{comment}"
+    }}) {{
+        comment {{
+            id
         }}
     }}
     """
@@ -214,10 +212,10 @@ def post_discussion_comment(
     response = requests.post(
         "https://api.github.com/graphql",
         headers=headers,
-        json={"query": query},
+        json={"mutation": query},
     )
     response.raise_for_status()
-
+    print(response.text)
 
     # repo._requester.requestJsonAndCheck(
     #     "POST",
